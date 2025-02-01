@@ -112,7 +112,7 @@ exports.deleteMenuById = async (req, res) => {
 
     if (!menu) return sendResponse(res, false, null, 404, "Menu not found");
 
-    return sendResponse(res, true, menu, 200, "Menu deleted successfully");
+    return sendResponse(res, true, null, 200, "Menu deleted successfully");
   } catch (err) {
     return handleError(res, false, err, 500, "Error deleting Menu master");
   }

@@ -11,5 +11,7 @@ router.delete("/:id", verifyToken, userController.deleteUserMaster);
 router.post("/change-password", verifyToken, userController.changePassword);
 router.post("/forgot-password", userController.forgotPassword);
 router.post("/reset-password", userController.resetPassword);
+router.get("/profile", verifyToken, userController.getProfile);
+router.get("/", verifyToken, userController.getAllUsers);
 
 module.exports = router;

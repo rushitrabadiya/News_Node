@@ -127,7 +127,7 @@ exports.deleteUserMaster = async (req, res) => {
 
     if (!user) return sendResponse(res, false, null, 404, "User not found");
 
-    return sendResponse(res, true, user, 200, "User deleted successfully");
+    return sendResponse(res, true, null, 200, "User deleted successfully");
   } catch (err) {
     return handleError(res, false, err, 500, "Error deleting UserMaster");
   }
@@ -216,5 +216,34 @@ exports.resetPassword = async (req, res) => {
     );
   } catch (err) {
     return handleError(res, false, err, 500, "Error resetting password");
+  }
+};
+
+exports.getProfile = async (req, res) => {
+  try {
+    const user = await UserMaster.findOne({
+      _id: req.user._id,
+      isDeleted: false,
+    });
+    if (!user) return sendResponse(res, false, null, 404, "User not found");
+
+    return sendResponse(
+      res,
+      true,
+      user,
+      200,
+      "User profile fetched successfully",
+    );
+  } catch (err) {
+    return handleError(res, false, err, 500, "Error fetching User profile");
+  }
+};
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await UserMaster.find({ isDeleted: false });
+    return sendResponse(res, true, users, 200, "Users fetched successfully");
+  } catch (err) {
+    return handleError(res, false, err, 500, "Error fetching Users");
   }
 };
