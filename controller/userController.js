@@ -5,16 +5,16 @@ const { sendResponse } = require("./../helper/responseHandler");
 const { handleError } = require("./../helper/errorHandler");
 const { comparePassword, hashPassword } = require("./../helper/hashHelper");
 const { JWT_EXPIRES_IN, JWT_SECRET } = require("./../config/config");
+const { sendLinkByEmail } = require("../helper/linkHelper");
 
 const {
   validateCreateUser,
   validateUserLogin,
   validateUpdateUser,
-  validateChagePassword,
+  validateChangePassword,
   validateResetPassword,
   validateForgotPassword,
 } = require("../Validation/userValidation");
-const { sendLinkByEmail } = require("../helper/linkHelper");
 
 exports.createUserMaster = async (req, res) => {
   try {
@@ -129,7 +129,6 @@ exports.deleteUserMaster = async (req, res) => {
 
     return sendResponse(res, true, user, 200, "User deleted successfully");
   } catch (err) {
-    console.error(err);
     return handleError(res, false, err, 500, "Error deleting UserMaster");
   }
 };
@@ -137,7 +136,7 @@ exports.deleteUserMaster = async (req, res) => {
 exports.changePassword = async (req, res) => {
   try {
     const bodyData = req.body;
-    const { isValid, message } = validateChagePassword(bodyData);
+    const { isValid, message } = validateChangePassword(bodyData);
     if (!isValid) return sendResponse(res, false, null, 400, message);
 
     if (bodyData.oldPassword === bodyData.newPassword) {

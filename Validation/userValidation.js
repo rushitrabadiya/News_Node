@@ -73,7 +73,7 @@ const validateCreateUser = (data) => {
   };
 };
 
-const validateUserLoginschema = Joi.object({
+const validateUserLoginSchema = Joi.object({
   email: Joi.string().email().optional().messages({
     "string.email": "Invalid email format",
     "any.required": "Email is required",
@@ -91,14 +91,14 @@ const validateUserLoginschema = Joi.object({
     }),
 });
 const validateUserLogin = (data) => {
-  const { error } = validateUserLoginschema.validate(data);
+  const { error } = validateUserLoginSchema.validate(data);
   return {
     isValid: !error,
     message: error ? error.details[0].message : null,
   };
 };
 
-const validateUpdateUserschema = Joi.object({
+const validateUpdateUserSchema = Joi.object({
   firstName: Joi.string().min(2).messages({
     "string.min": "First name should be at least 2 characters long",
   }),
@@ -145,7 +145,7 @@ const validateUpdateUserschema = Joi.object({
   }),
 });
 const validateUpdateUser = (data) => {
-  const { error } = validateUpdateUserschema.validate(data);
+  const { error } = validateUpdateUserSchema.validate(data);
   return {
     isValid: !error,
     message: error ? error.details[0].message : null,
@@ -163,7 +163,7 @@ const changePasswordSchema = Joi.object({
   }),
 });
 
-const validateChagePassword = (data) => {
+const validateChangePassword = (data) => {
   const { error } = changePasswordSchema.validate(data);
   return {
     isValid: !error,
@@ -205,7 +205,7 @@ module.exports = {
   validateCreateUser,
   validateUserLogin,
   validateUpdateUser,
-  validateChagePassword,
+  validateChangePassword,
   validateResetPassword,
   validateForgotPassword,
 };
