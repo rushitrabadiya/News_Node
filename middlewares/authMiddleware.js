@@ -5,11 +5,6 @@ const { JWT_SECRET } = require("./../config/config");
 const verifyToken = (req, res, next) => {
   const token = req.headers["authorization"];
   if (!token) {
-    handleErrorNotification(
-      "Authorization Error",
-      "Access denied. No token provided.",
-      req,
-    );
     return sendResponse(
       res,
       "false",
@@ -24,18 +19,12 @@ const verifyToken = (req, res, next) => {
     req.user = decoded;
     next();
   } catch (error) {
-    handleErrorNotification("Authorization Error", "Invalid token.", req);
     return sendResponse(res, "false", null, 401, "Invalid token.");
   }
 };
 
 const isAdmin = (req, res, next) => {
   if (req.user.role !== "admin") {
-    handleErrorNotification(
-      "Authorization Error",
-      "Access denied. Admins only.",
-      req,
-    );
     return sendResponse(res, "false", null, 403, "Access denied. Admins only.");
   }
 
@@ -43,15 +32,8 @@ const isAdmin = (req, res, next) => {
 };
 
 const isVerify = (req, res, next) => {
-  // console.log(req.user);
-
   if (req.user.isVerifyEmail || req.user.isVerifyPhoneno) next();
   else {
-    handleErrorNotification(
-      "Authorization Error",
-      "Access denied. User not verified.",
-      req,
-    );
     return sendResponse(
       res,
       "false",
@@ -66,11 +48,6 @@ const isVerifyEmail = (req, res, next) => {
   if (req.user.isVerifyEmail) {
     next();
   } else {
-    handleErrorNotification(
-      "Authorization Error",
-      "Access denied. Email not verified.",
-      req,
-    );
     return sendResponse(
       res,
       "false",
@@ -87,11 +64,6 @@ const isVerifyPhoneno = (req, res, next) => {
   if (req.user.isVerifyPhoneno) {
     next();
   } else {
-    handleErrorNotification(
-      "Authorization Error",
-      "Access denied. Phone number not verified.",
-      req,
-    );
     return sendResponse(
       res,
       "false",
