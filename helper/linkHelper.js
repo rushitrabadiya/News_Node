@@ -26,20 +26,24 @@ exports.sendLinkByEmail = async (user, res) => {
     from: AUTH_USER,
     to: user.email,
     subject: "Password Reset Request",
-    text: `Click the link below to reset your password. The link will expire in 1 hour:
-          ${resetLink}`,
+    text: `Dear User,
+
+    A password reset for your account was requested.
+    
+    Please click the Link below to change your password.
+    
+    ${resetLink}
+    
+    Note that this link is valid for 10 min. After the time limit has expired, you will have to resubmit the request for a password reset.`,
   };
 
   try {
     await transporter.sendMail(mailOptions);
-    res.status(200).json({
-      success: true,
-      message: "Link has been sent successfully.",
-    });
+    return { success: true, message: "Link has been sent successfully." };
   } catch (error) {
-    res.status(500).json({
+    return {
       success: false,
       message: "Failed to send link. Please try again.",
-    });
+    };
   }
 };
