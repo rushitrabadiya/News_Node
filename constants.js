@@ -9,4 +9,15 @@ const STATUS_ENUM = Object.freeze({
   BLOCKED: "blocked",
 });
 
-module.exports = { STATUS_ENUM };
+const ACTIONS = Object.freeze({
+  READ: "READ",
+  CREATE: "CREATE",
+  EDIT: "EDIT",
+  DELETE: "DELETE",
+});
+
+const KEY = Object.freeze({
+  TAGS: "TAGS",
+  USERS: "USERS",
+});
+module.exports = { STATUS_ENUM, ACTIONS, KEY };

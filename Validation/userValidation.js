@@ -143,6 +143,7 @@ const validateUpdateUserSchema = Joi.object({
   state: Joi.string().messages({
     "any.required": "State is required",
   }),
+  roleId: Joi.string().optional(),
 });
 const validateUpdateUser = (data) => {
   const { error } = validateUpdateUserSchema.validate(data);

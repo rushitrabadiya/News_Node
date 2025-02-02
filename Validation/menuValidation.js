@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const { STATUS_ENUM } = require("./../constants");
+const { STATUS_ENUM, KEY } = require("./../constants");
 
 const validateCreateMenuMasterSchema = Joi.object({
   name: Joi.string().min(2).required().messages({
@@ -12,6 +12,12 @@ const validateCreateMenuMasterSchema = Joi.object({
   icon: Joi.string().optional().messages({
     "string.base": "Icon should be a valid string",
   }),
+  key: Joi.string()
+    .valid(...Object.values(KEY))
+    .optional()
+    .messages({
+      "any.only": `key should be one of the following: ${Object.values(KEY).join(", ")}`,
+    }),
   parentName: Joi.string().optional().messages({
     "string.base": "Parent name should be a valid string",
   }),
@@ -48,6 +54,12 @@ const validateUpdateMenuMasterSchema = Joi.object({
     .optional()
     .messages({
       "any.only": `Status should be one of the following: ${Object.values(STATUS_ENUM).join(", ")}`,
+    }),
+  key: Joi.string()
+    .valid(...Object.values(KEY))
+    .optional()
+    .messages({
+      "any.only": `key should be one of the following: ${Object.values(KEY).join(", ")}`,
     }),
 });
 

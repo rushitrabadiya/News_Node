@@ -70,7 +70,6 @@ exports.loginUserMaster = async (req, res) => {
     if (!isMatch) {
       return sendResponse(res, false, null, 400, "Invalid credentials");
     }
-
     const token = jwt.sign({ _id: user._id, roleId: user.roleId }, JWT_SECRET, {
       expiresIn: JWT_EXPIRES_IN,
     });

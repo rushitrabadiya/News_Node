@@ -1,18 +1,41 @@
 const Joi = require("joi");
-const { STATUS_ENUM } = require("./../constants");
+const { STATUS_ENUM, ACTIONS } = require("./../constants");
+
+const objectIdValidator = (value, helpers) => {
+  if (!mongoose.Types.ObjectId.isValid(value)) {
+    return helpers.error("any.invalid");
+  }
+  return value;
+};
 
 const validateCreateRoleMasterSchema = Joi.object({
   name: Joi.string().min(2).required().messages({
     "string.min": "Role name should be at least 2 characters long",
     "any.required": "Role name is required",
   }),
-  permission: Joi.array()
-    .items(Joi.string().hex().length(24).required())
+  permissions: Joi.array()
+    .items(
+      Joi.object({
+        menu: Joi.string()
+          .custom(objectIdValidator, "ObjectId validation")
+          .required()
+          .messages({
+            "any.invalid": "Menu ID must be a valid ObjectId",
+            "any.required": "Menu ID is required",
+          }),
+        actions: Joi.array()
+          .items(Joi.string().valid(...Object.values(ACTIONS)))
+          .min(1)
+          .required()
+          .messages({
+            "array.includes": "Each action must be a valid permission",
+            "array.min": "At least one action is required",
+          }),
+      }),
+    )
     .optional()
     .messages({
-      "array.includes": "Permissions should be an array of valid ObjectIds",
-      "string.hex": "Each permission should be a valid ObjectId",
-      "string.length": "Each permission should be 24 characters long",
+      "array.includes": "Permissions should be an array of valid objects",
     }),
   status: Joi.string()
     .valid(...Object.values(STATUS_ENUM))

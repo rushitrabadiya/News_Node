@@ -1,14 +1,15 @@
 const mongoose = require("mongoose");
 const autoTrackPlugin = require("./../helper/autoTrackPlugin");
-const { STATUS_ENUM } = require("./../constants");
+const { STATUS_ENUM, ACTIONS } = require("./../constants");
 
 const roleMasterSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
-    permission: [
+
+    permissions: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "MenuMaster",
+        menu: { type: mongoose.Schema.Types.ObjectId, ref: "MenuMaster" },
+        actions: [{ type: String, enum: Object.values(ACTIONS) }],
       },
     ],
     status: {

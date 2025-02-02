@@ -106,3 +106,32 @@ exports.getAllRoles = async (req, res) => {
     return handleError(res, false, err, 500, "Error getting Role Master");
   }
 };
+
+exports.assignPermissions = async (req, res) => {
+  try {
+    const { roleId, permissions } = req.body;
+    const role = await RoleMaster.findById(roleId);
+    if (!role) return res.status(404).json({ message: "Role not found" });
+    if (
+      !permissions ||
+      !Array.isArray(permissions) ||
+      permissions.length === 0
+    ) {
+      return res.status(400).json({ message: "Invalid permissions data" });
+    }
+    role.permissions = permissions.map((perm) => ({
+      menu: perm.menuId, // Store menuId as ObjectId reference
+      actions: perm.actions,
+    }));
+    await role.save();
+    return sendResponse(
+      res,
+      true,
+      role,
+      200,
+      "Permissions assigned successfully",
+    );
+  } catch (error) {
+    return handleError(res, false, error, 500, "Error assigning permissions");
+  }
+};
