@@ -19,5 +19,8 @@ const ACTIONS = Object.freeze({
 const KEY = Object.freeze({
   TAGS: "TAGS",
   USERS: "USERS",
+  CATEGORIES: "CATEGORIES",
+  MENU: "MENU",
+  ROLES: "ROLES",
 });
 module.exports = { STATUS_ENUM, ACTIONS, KEY };

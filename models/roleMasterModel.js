@@ -17,6 +17,7 @@ const roleMasterSchema = new mongoose.Schema(
       enum: Object.values(STATUS_ENUM),
       default: STATUS_ENUM.ACTIVE,
     },
+    isDeleted: { type: Boolean, default: false },
   },
   { timestamps: true },
 );

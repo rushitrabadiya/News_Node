@@ -2,23 +2,26 @@ const mongoose = require("mongoose");
 const autoTrackPlugin = require("./../helper/autoTrackPlugin");
 const { STATUS_ENUM } = require("./../constants");
 
-const tagSchema = new mongoose.Schema(
+const categorySchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
-    slug: { type: String, required: true },
-    description: { type: String },
     status: {
       type: String,
       enum: Object.values(STATUS_ENUM),
       default: STATUS_ENUM.ACTIVE,
     },
     isDeleted: { type: Boolean, default: false },
+    parentId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+      default: null,
+    },
   },
   { timestamps: true },
 );
 
-tagSchema.plugin(autoTrackPlugin);
+categorySchema.plugin(autoTrackPlugin);
 
-const Tag = mongoose.model("tag", tagSchema);
+const Category = mongoose.model("Category ", categorySchema);
 
-module.exports = Tag;
+module.exports = Category;
