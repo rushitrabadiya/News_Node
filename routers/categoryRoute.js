@@ -21,6 +21,12 @@ router.get(
   categoryController.getAllCategories,
 );
 router.get(
+  "/nestedCategories",
+  verifyToken,
+  checkPermission(KEY.CATEGORIES, ACTIONS.READ),
+  categoryController.getNestedCategories,
+);
+router.get(
   "/:id",
   verifyToken,
   checkPermission(KEY.CATEGORIES, ACTIONS.READ),

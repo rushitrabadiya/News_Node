@@ -124,7 +124,7 @@ exports.getCategoryById = async (req, res) => {
 
 exports.getAllCategories = async (req, res) => {
   try {
-    const categories = await getNestedCategories();
+    const categories = await Category.find({ isDeleted: false });
 
     if (!categories || categories.length === 0)
       return sendResponse(res, false, null, 404, "No categories found");
@@ -140,6 +140,32 @@ exports.getAllCategories = async (req, res) => {
     return handleError(res, false, err, 500, "Error retrieving categories");
   }
 };
+
+exports.getNestedCategories = async (req, res) => {
+  try {
+    const categories = await getNestedCategories();
+
+    if (!categories || categories.length === 0)
+      return sendResponse(res, false, null, 404, "No nested categories found");
+
+    return sendResponse(
+      res,
+      true,
+      categories,
+      200,
+      "Nested categories retrieved successfully",
+    );
+  } catch (err) {
+    return handleError(
+      res,
+      false,
+      err,
+      500,
+      "Error retrieving nested categories",
+    );
+  }
+};
+
 exports.deleteCategory = async (req, res) => {
   try {
     const category = await Category.findOneAndUpdate(
