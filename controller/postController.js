@@ -57,8 +57,11 @@ exports.getPostById = async (req, res) => {
   try {
     const { isValid, message } = validateGetPostById({ id: req.params.id });
     if (!isValid) return sendResponse(res, false, null, 400, message);
-
-    const post = await Post.findOne({ _id: req.params.id, isDeleted: false })
+    const post = await Post.findOneAndUpdate(
+      { _id: req.params.id, isDeleted: false },
+      { $inc: { views: 1 } },
+      { new: true },
+    )
       .populate("author", "_id name")
       .populate("categories", "_id name")
       .populate("tags", "_id name");
