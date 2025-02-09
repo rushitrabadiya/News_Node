@@ -59,7 +59,7 @@ exports.getPostById = async (req, res) => {
     if (!isValid) return sendResponse(res, false, null, 400, message);
     const post = await Post.findOneAndUpdate(
       { _id: req.params.id, isDeleted: false },
-      { $inc: { views: 1 } },
+      { $inc: { visitorCounter: 1 } },
       { new: true },
     )
       .populate("author", "_id name")
@@ -75,7 +75,7 @@ exports.getPostById = async (req, res) => {
 
 exports.getAllPosts = async (req, res) => {
   try {
-    const { categoryId, tagId } = req.query;
+    const { categoryId, tagId, search } = req.query;
     let query = { isDeleted: false };
     if (categoryId) {
       query.categories = {
