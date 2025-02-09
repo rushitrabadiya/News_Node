@@ -9,6 +9,13 @@ const STATUS_ENUM = Object.freeze({
   BLOCKED: "blocked",
 });
 
+const POST_STATUS = Object.freeze({
+  PUBLISHED: "published",
+  DRAFT: "draft",
+  PENDING: "pending",
+  ARCHIVED: "archived",
+});
+
 const ACTIONS = Object.freeze({
   READ: "READ",
   CREATE: "CREATE",
@@ -22,5 +29,6 @@ const KEY = Object.freeze({
   CATEGORIES: "CATEGORIES",
   MENU: "MENU",
   ROLES: "ROLES",
+  POSTS: "POSTS",
 });
-module.exports = { STATUS_ENUM, ACTIONS, KEY };
+module.exports = { STATUS_ENUM, ACTIONS, KEY, POST_STATUS };

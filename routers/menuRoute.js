@@ -11,31 +11,31 @@ const { ACTIONS, KEY } = require("../constants.js");
 router.post(
   "/",
   verifyToken,
-  checkPermission(KEY.MENU, ACTIONS.CREATE),
+  // checkPermission(KEY.MENU, ACTIONS.CREATE),
   menuController.createMenuMaster,
 );
 router.get(
   "/",
   verifyToken,
-  checkPermission(KEY.MENU, ACTIONS.READ),
+  // checkPermission(KEY.MENU, ACTIONS.READ),
   menuController.getAllMenu,
 );
 router.get(
   "/:id",
   verifyToken,
-  checkPermission(KEY.MENU, ACTIONS.READ),
+  // checkPermission(KEY.MENU, ACTIONS.READ),
   menuController.getMenuById,
 );
 router.put(
   "/:id",
   verifyToken,
-  checkPermission(KEY.MENU, ACTIONS.EDIT),
+  // checkPermission(KEY.MENU, ACTIONS.EDIT),
   menuController.updateMenuMaster,
 );
 router.delete(
   "/:id",
   verifyToken,
-  checkPermission(KEY.MENU, ACTIONS.DELETE),
+  // checkPermission(KEY.MENU, ACTIONS.DELETE),
   menuController.deleteMenuById,
 );
 

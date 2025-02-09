@@ -19,6 +19,6 @@ const tagSchema = new mongoose.Schema(
 
 tagSchema.plugin(autoTrackPlugin);
 
-const Tag = mongoose.model("tag", tagSchema);
+const Tag = mongoose.model("Tag", tagSchema);
 
 module.exports = Tag;

@@ -22,6 +22,6 @@ const categorySchema = new mongoose.Schema(
 
 categorySchema.plugin(autoTrackPlugin);
 
-const Category = mongoose.model("Category ", categorySchema);
+const Category = mongoose.model("Category", categorySchema);
 
 module.exports = Category;
