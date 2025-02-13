@@ -7,6 +7,7 @@ const {
   validateUpdatePost,
   validateGetPostById,
 } = require("../Validation/postValidation");
+const { USER_DEFAULT, CATEGORY_DEFAULT, TAG_DEFAULT } = require("../constants");
 
 exports.createPost = async (req, res) => {
   try {
@@ -62,9 +63,9 @@ exports.getPostById = async (req, res) => {
       { $inc: { visitorCounter: 1 } },
       { new: true },
     )
-      .populate("author", "_id name")
-      .populate("categories", "_id name")
-      .populate("tags", "_id name");
+      .populate("author", USER_DEFAULT)
+      .populate("categories", CATEGORY_DEFAULT)
+      .populate("tags", TAG_DEFAULT);
     if (!post) return sendResponse(res, false, null, 404, "Post not found");
 
     return sendResponse(res, true, post, 200, "Post retrieved successfully");
@@ -90,9 +91,9 @@ exports.getAllPosts = async (req, res) => {
       query.tags = { $in: Array.isArray(tagId) ? tagId : [tagId] };
     }
     const posts = await Post.find(query)
-      .populate("author", "_id firstName lastName")
-      .populate("categories", "_id name")
-      .populate("tags", "_id name");
+      .populate("author", USER_DEFAULT)
+      .populate("categories", CATEGORY_DEFAULT)
+      .populate("tags", TAG_DEFAULT);
 
     if (!posts || posts.length === 0)
       return sendResponse(res, false, null, 404, "No posts found");

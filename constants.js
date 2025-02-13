@@ -31,4 +31,35 @@ const KEY = Object.freeze({
   ROLES: "ROLES",
   POSTS: "POSTS",
 });
-module.exports = { STATUS_ENUM, ACTIONS, KEY, POST_STATUS };
+
+const USER_DEFAULT = [
+  "_id",
+  "firstName",
+  "lastName",
+  "email",
+  "phoneNumber",
+  "roleId",
+];
+
+const POST_DEFAULT = [
+  "_id",
+  "title",
+  "subTitle",
+  "author",
+  "categories",
+  "tags",
+  "status",
+];
+const TAG_DEFAULT = ["name", "_id", "status"];
+const CATEGORY_DEFAULT = ["name", "_id", "status", "parentId"];
+
+module.exports = {
+  STATUS_ENUM,
+  ACTIONS,
+  KEY,
+  POST_STATUS,
+  TAG_DEFAULT,
+  POST_DEFAULT,
+  USER_DEFAULT,
+  CATEGORY_DEFAULT,
+};
